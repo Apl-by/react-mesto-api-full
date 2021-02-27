@@ -1,5 +1,6 @@
 const Card = require('../models/card');
 const handleError = require('../errors/utils');
+const handleSaftyStr = require('../utils/utils');
 
 const getCards = (req, res, next) => {
   Card.find({})
@@ -10,8 +11,7 @@ const getCards = (req, res, next) => {
 const createCard = (req, res, next) => {
   const ownerId = req.user._id;
   const { name, link } = req.body;
-
-  Card.create({ name, link, owner: ownerId })
+  Card.create({ ...handleSaftyStr({ name }), link, owner: ownerId })
     .then((card) => res.send(card))
     .catch((err) => handleError(err, next));
 };

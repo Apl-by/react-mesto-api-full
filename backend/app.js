@@ -1,4 +1,6 @@
+require('dotenv').config();
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
@@ -10,6 +12,11 @@ const authValidator = require('./middlewares/validators/authValidator');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+});
 
 const allowedCors = [
   'https://apl-by.students.nomoreparties.space',
@@ -44,16 +51,18 @@ app.use((req, res, next) => {
 
   next();
 });
-
+app.use(limiter);
 app.use(bodyParser.json());
 app.use(helmet());
 
 app.use(requestLogger);
+
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
 app.post('/signin', authValidator, login);
 app.post('/signup', authValidator, createUser);
 app.use('/', router);

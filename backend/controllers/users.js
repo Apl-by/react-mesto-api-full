@@ -1,7 +1,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const handleSaftyStr = require('../utils/utils');
 const handleError = require('../errors/utils');
+const { JWT_SECRET } = require('../config/index');
 
 const getUser = (req, res, next) => {
   const id = req.user._id;
@@ -21,7 +23,11 @@ const createUser = (req, res, next) => {
 const updateUser = (req, res, next) => {
   const ownerId = req.user._id;
   const { name, about } = req.body;
-  User.findByIdAndUpdate(ownerId, { name, about }, { new: true, runValidators: true })
+  User.findByIdAndUpdate(
+    ownerId,
+    handleSaftyStr({ name, about }),
+    { new: true, runValidators: true },
+  )
     .then((user) => res.send(user))
     .catch((err) => handleError(err, next));
 };
@@ -39,7 +45,9 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+        expiresIn: '7d',
+      });
       res.send({ token });
     })
     .catch(next);
