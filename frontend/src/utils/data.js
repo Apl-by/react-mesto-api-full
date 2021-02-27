@@ -1,5 +1,5 @@
 export const config = {
-  baseUrl: "http://localhost:3000",
+  baseUrl: "https://apl-by.students.nomoreparties.space",
   headers: {
     "Content-Type": "application/json",
   },
