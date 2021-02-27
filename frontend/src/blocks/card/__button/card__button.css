@@ -1,0 +1,22 @@
+.card__button {
+  background: none;
+  box-shadow: none;
+  border: none;
+  width: 21px;
+  height: 19px;
+  background-image: url("../../../images/Heart-button.svg");
+  background-position: center;
+  margin-left: auto;
+  cursor: pointer;
+  padding: 0;
+}
+
+.card__button:focus {
+  outline: none;
+  opacity: 0.8;
+}
+
+.card__button:hover {
+  opacity: 0.6;
+  transition: opacity 0.3s linear;
+}

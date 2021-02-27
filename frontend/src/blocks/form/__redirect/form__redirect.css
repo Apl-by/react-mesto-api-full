@@ -1,0 +1,30 @@
+.form__redirect {
+  box-shadow: none;
+  background: none;
+  border: none;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+  margin: 15px 0 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.form__redirect:focus {
+  outline: none;
+  opacity: 0.8;
+}
+
+.form__redirect:hover {
+  opacity: 0.8;
+  transition: opacity 0.3s linear;
+}
+
+@media screen and (max-width: 460px) {
+  .form__redirect {
+    margin: 20px 0 0;
+  }
+}

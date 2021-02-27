@@ -1,0 +1,6 @@
+.header__auth-btn_type_open {
+  height: 21px;
+  width: 24px;
+  background-image: url("../../../../images/menu-btn.svg");
+  background-repeat: no-repeat;
+}

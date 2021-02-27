@@ -1,0 +1,20 @@
+.form__field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  margin-bottom: 30px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+@media screen and (max-width: 460px) {
+  .form__field {
+    margin-bottom: 20px;
+    font-size: 12px;
+    line-height: 15px;
+    min-height: 22px;
+  }
+}

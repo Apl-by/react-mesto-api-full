@@ -1,0 +1,20 @@
+.form__input_type_auth {
+  border-bottom: 2px solid #cccccc;
+  color: #cccccc;
+  background-color: transparent;
+}
+
+.form__input_type_auth::placeholder {
+  color: #cccccc;
+}
+
+.form__input_type_auth:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 460px) {
+  .form__input_type_auth {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

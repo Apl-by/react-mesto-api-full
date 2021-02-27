@@ -1,0 +1,9 @@
+.header__auth-btn_type_close {
+  height: 43px;
+  width: 43px;
+  margin-right: 20px;
+  background-image: url("../../../../images/closeicon.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: translateY(-15px);
+}

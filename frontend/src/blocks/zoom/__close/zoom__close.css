@@ -1,0 +1,33 @@
+.zoom__close {
+  background: none;
+  border: none;
+  box-shadow: none;
+  background-image: url("../../../images/closeicon.svg");
+  background-size: cover;
+  width: 58px;
+  height: 58px;
+  position: absolute;
+  top: -46px;
+  right: -46px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.zoom__close:focus {
+  outline: none;
+  opacity: 0.6;
+}
+
+.zoom__close:hover {
+  opacity: 0.6;
+  transition: opacity 0.3s linear;
+}
+
+@media screen and (max-width: 460px) {
+  .zoom__close {
+    width: 44px;
+    height: 44px;
+    top: -35px;
+    right: -35px;
+  }
+}

@@ -1,0 +1,21 @@
+.form__input-error {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  z-index: 1;
+  background-color: #ffffff;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  width: 100%;
+  visibility: hidden;
+}
+
+@media screen and (max-width: 460px) {
+  .form__input-error {
+    font-size: 10px;
+    line-height: 12px;
+  }
+}

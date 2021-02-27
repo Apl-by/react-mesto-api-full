@@ -1,0 +1,6 @@
+@media screen and (max-width: 460px) {
+  .form__close_type_info-tip {
+    top: -65px;
+    right: calc(50% - 22px);
+  }
+}

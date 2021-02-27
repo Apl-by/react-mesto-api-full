@@ -1,0 +1,12 @@
+.header__login {
+  margin-right: 24px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+@media screen and (max-width: 460px) {
+  .header__login {
+    margin-right: 0;
+  }
+}

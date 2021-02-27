@@ -1,0 +1,33 @@
+.header__auth-btn {
+  box-shadow: none;
+  background: none;
+  border: none;
+  font-style: normal;
+  font-weight: normal;
+  color: #ffffff;
+  padding: 0;
+  cursor: pointer;
+}
+
+.header__auth-btn:focus {
+  outline: none;
+  opacity: 0.8;
+}
+
+.header__auth-btn:hover {
+  opacity: 0.8;
+  transition: opacity 0.3s linear;
+}
+
+@media screen and (max-width: 900px) {
+  .header__auth-btn {
+    margin-right: 30px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .header__auth-btn {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

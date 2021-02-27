@@ -1,0 +1,7 @@
+.card__sign {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 22px 21px 28px;
+}

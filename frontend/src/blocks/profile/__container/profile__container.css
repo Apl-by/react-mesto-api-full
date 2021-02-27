@@ -1,0 +1,18 @@
+.profile__container {
+  display: grid;
+  grid-template-areas: "avatar";
+  align-items: center;
+  justify-items: center;
+  margin-right: 30px;
+}
+
+.profile__container:hover > .profile__shading {
+  opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__container {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}

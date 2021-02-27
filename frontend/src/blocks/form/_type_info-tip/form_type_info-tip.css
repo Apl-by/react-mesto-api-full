@@ -1,0 +1,10 @@
+.form_type_info-tip {
+  min-height: 330px;
+}
+
+@media screen and (max-width: 460px) {
+  .form_type_info-tip {
+    min-height: 308px;
+    padding: 0 16px 0;
+  }
+}
