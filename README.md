@@ -3,4 +3,6 @@
   
 Ссылка на сайт, размещенный на Яндекс.Облаке:   
 - [https://apl-by.students.nomoreparties.space](https://apl-by.students.nomoreparties.space);  
-- публичный ip: 84.201.172.6;
+- backend: https://api.apl-by.students.nomoreparties.space;
+- публичный ip: 84.201.172.6;  
+

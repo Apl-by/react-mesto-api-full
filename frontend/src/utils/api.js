@@ -55,14 +55,14 @@ class Api {
       .then(this._handleResponse);
   }
 
-  deleteCard(cardId, token) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+  deleteCard(card, token) {
+    return fetch(`${this._baseUrl}/cards/${card._id}`, {
       method: "DELETE",
       headers: {
         ...this._headers,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(),
+      body: JSON.stringify(card),
     })
       .then(this._handleResToJson)
       .then(this._handleResponse);

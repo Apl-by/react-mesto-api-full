@@ -105,7 +105,7 @@ function App() {
 
   const handleCardDeleteConfirm = (card) => {
     api
-      .deleteCard(card._id, jwt)
+      .deleteCard(card, jwt)
       .then(() => {
         const newCards = cards.filter((i) => !(i._id === card._id));
         setCards(newCards);

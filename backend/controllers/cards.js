@@ -1,5 +1,6 @@
 const Card = require('../models/card');
 const handleError = require('../errors/utils');
+const ForbiddenError = require('../errors/ForbiddenError');
 
 const getCards = (req, res, next) => {
   Card.find({})
@@ -8,17 +9,19 @@ const getCards = (req, res, next) => {
 };
 
 const createCard = (req, res, next) => {
-  const ownerId = req.user._id;
+  const { _id } = req.user;
   const { name, link } = req.body;
-  Card.create({ name, link, owner: ownerId })
+  Card.create({ name, link, owner: _id })
     .then((card) => res.send(card))
     .catch((err) => handleError(err, next));
 };
 
 const deleteCard = (req, res, next) => {
   const { cardId } = req.params;
-
-  Card.findByIdAndRemove(cardId).orFail()
+  if (req.body.owner !== req.user._id) {
+    return next(new ForbiddenError('Нельзя удалить чужую карточку'));
+  }
+  return Card.findByIdAndRemove(cardId).orFail()
     .then(() => res.send({ message: 'Карточка удалена' }))
     .catch((err) => handleError(err, next));
 };

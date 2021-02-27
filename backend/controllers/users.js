@@ -4,7 +4,20 @@ const User = require('../models/user');
 const handleError = require('../errors/utils');
 const { JWT_SECRET } = require('../config/index');
 
+const getUsers = (req, res, next) => {
+  User.find({})
+    .then((users) => res.send(users))
+    .catch((err) => handleError(err, next));
+};
+
 const getUser = (req, res, next) => {
+  const { id } = req.params;
+  User.findById(id).orFail()
+    .then((user) => res.send(user))
+    .catch((err) => handleError(err, next));
+};
+
+const getMe = (req, res, next) => {
   const id = req.user._id;
   User.findById(id).orFail()
     .then((user) => res.send(user))
@@ -53,5 +66,5 @@ const login = (req, res, next) => {
 };
 
 module.exports = {
-  getUser, createUser, updateUser, updateUserAvatar, login,
+  getUsers, getUser, getMe, createUser, updateUser, updateUserAvatar, login,
 };

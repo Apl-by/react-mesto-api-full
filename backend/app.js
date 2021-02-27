@@ -8,7 +8,8 @@ const { CelebrateError } = require('celebrate');
 const cors = require('cors');
 const router = require('./routes');
 const { login, createUser } = require('./controllers/users');
-const authValidator = require('./middlewares/validators/authValidator');
+const loginValidator = require('./middlewares/validators/loginValidator');
+const registerValidator = require('./middlewares/validators/registerValidator');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
@@ -63,8 +64,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', authValidator, login);
-app.post('/signup', authValidator, createUser);
+app.post('/signin', loginValidator, login);
+app.post('/signup', registerValidator, createUser);
 app.use('/', router);
 
 app.use(errorLogger);
@@ -72,7 +73,10 @@ app.use(errorLogger);
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (err instanceof CelebrateError) {
-    return res.status(400).send({ message: err.details.get('body').details[0].message });
+    const message = err.details.get('body')
+      ? err.details.get('body').details[0].message
+      : err.details.get('params').details[0].message;
+    return res.status(400).send({ message });
   }
   return res.status(err.statusCode).send({ message: err.message });
 });
