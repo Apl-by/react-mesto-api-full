@@ -149,11 +149,9 @@ function App() {
   };
 
   const handleUpdateUser = (updateInfo) => {
-    console.log(111);
     api
       .updateUserInfo(updateInfo, jwt)
       .then((res) => {
-        console.log(res);
         setCurrentUser(res);
         closeAllPopups();
       })

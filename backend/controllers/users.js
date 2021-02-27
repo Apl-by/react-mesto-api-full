@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const handleSaftyStr = require('../utils/utils');
 const handleError = require('../errors/utils');
 const { JWT_SECRET } = require('../config/index');
 
@@ -25,7 +24,7 @@ const updateUser = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(
     ownerId,
-    handleSaftyStr({ name, about }),
+    { name, about },
     { new: true, runValidators: true },
   )
     .then((user) => res.send(user))
