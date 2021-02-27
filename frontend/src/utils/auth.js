@@ -1,4 +1,4 @@
-import { configAuth } from "./data";
+import { config } from "./data";
 
 class Auth {
   constructor(options) {
@@ -51,4 +51,4 @@ class Auth {
   }
 }
 
-export const auth = new Auth(configAuth);
+export const auth = new Auth(config);

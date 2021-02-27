@@ -49,6 +49,11 @@ app.use(bodyParser.json());
 app.use(helmet());
 
 app.use(requestLogger);
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 app.post('/signin', authValidator, login);
 app.post('/signup', authValidator, createUser);
 app.use('/', router);

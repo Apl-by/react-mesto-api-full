@@ -24,7 +24,12 @@ import InfoTooltip from "./InfoTooltip";
 function App() {
   const history = useHistory();
   const [mountedComponent, setMountedComponent] = useState("");
-  const [currentUser, setCurrentUser] = useState({ name: "Name", about: "Description", avatar: defaultAvatar });
+  const [currentUser, setCurrentUser] = useState({
+    name: "Name",
+    about: "Description",
+    avatar: defaultAvatar,
+    email: "",
+  });
   const [cards, setCards] = useState([]);
   const [cardForDelete, setCardForDelete] = useState({});
   const [selectedCard, setSelectedCard] = useState({ name: "#", link: "" });
@@ -38,7 +43,6 @@ function App() {
   const [isSuccessfulReg, setIsSuccessfulReg] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
-  const [userEmail, setUserEmail] = useState("");
 
   const isMobile = useMediaQuery({ query: "(max-width: 460px)" });
 
@@ -47,14 +51,13 @@ function App() {
       auth
         .checkToken(token)
         .then((res) => {
-          console.log(res);
           setIsLoggedIn(true);
-          setUserEmail(res.email);
+          setCurrentUser(res);
           history.push("/");
         })
         .catch((err) => console.log(err));
     },
-    [setIsLoggedIn, setUserEmail, history]
+    [setIsLoggedIn, setCurrentUser, history]
   );
 
   useEffect(() => {
@@ -62,27 +65,19 @@ function App() {
   }, [jwt, checkValidityToken]);
 
   useEffect(() => {
-    api
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    if (!isLoggedIn) return;
 
-  useEffect(() => {
-    console.log(222);
     api
-      .getInitialCards()
+      .getInitialCards(jwt)
       .then((res) => {
         setCards(res);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [isLoggedIn, jwt]);
 
   const handleAddPlaceSubmit = (card, e) => {
     api
-      .addNewCard(card)
+      .addNewCard(card, jwt)
       .then((res) => {
         setCards([res, ...cards]);
         closeAllPopups();
@@ -93,9 +88,9 @@ function App() {
   };
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     api
-      .changeLikeCardStatus(card._id, isLiked)
+      .changeLikeCardStatus(card._id, isLiked, jwt)
       .then((newCard) => {
         const newCards = cards.map((i) => (i._id === card._id ? newCard : i));
         setCards(newCards);
@@ -110,7 +105,7 @@ function App() {
 
   const handleCardDeleteConfirm = (card) => {
     api
-      .deleteCard(card._id)
+      .deleteCard(card._id, jwt)
       .then(() => {
         const newCards = cards.filter((i) => !(i._id === card._id));
         setCards(newCards);
@@ -154,9 +149,11 @@ function App() {
   };
 
   const handleUpdateUser = (updateInfo) => {
+    console.log(111);
     api
-      .updateUserInfo(updateInfo)
+      .updateUserInfo(updateInfo, jwt)
       .then((res) => {
+        console.log(res);
         setCurrentUser(res);
         closeAllPopups();
       })
@@ -166,7 +163,7 @@ function App() {
 
   const handleUpdateAvatar = (avatarLink, e) => {
     api
-      .editAvatar(avatarLink)
+      .editAvatar(avatarLink, jwt)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -206,7 +203,12 @@ function App() {
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
-    setUserEmail("");
+    setCurrentUser({
+      name: "Name",
+      about: "Description",
+      avatar: defaultAvatar,
+      email: "",
+    });
   };
 
   const handleMountedComponent = useCallback(
@@ -225,7 +227,7 @@ function App() {
             path={setRedirectPath(mountedComponent)}
             history={history}
             isLoggedIn={isLoggedIn}
-            email={userEmail}
+            email={currentUser.email}
             onSignOut={handleSignOut}
           />
         )}
@@ -235,7 +237,7 @@ function App() {
             path={setRedirectPath(mountedComponent)}
             history={history}
             isLoggedIn={isLoggedIn}
-            email={userEmail}
+            email={currentUser.email}
             onSignOut={handleSignOut}
           />
         )}
@@ -248,6 +250,7 @@ function App() {
           </Route>
           <ProtectedRoute
             component={Main}
+            path="/"
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
