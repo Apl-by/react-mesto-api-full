@@ -18,11 +18,15 @@ const createCard = (req, res, next) => {
 
 const deleteCard = (req, res, next) => {
   const { cardId } = req.params;
-  if (req.body.owner !== req.user._id) {
-    return next(new ForbiddenError('Нельзя удалить чужую карточку'));
-  }
-  return Card.findByIdAndRemove(cardId).orFail()
-    .then(() => res.send({ message: 'Карточка удалена' }))
+
+  Card.findById(cardId).orFail()
+    .then((card) => {
+      if (String(card.owner) !== req.user._id) {
+        return next(new ForbiddenError('Нельзя удалить чужую карточку'));
+      }
+      return Card.findByIdAndRemove(cardId).orFail()
+        .then(() => res.send({ message: 'Карточка удалена' }));
+    })
     .catch((err) => handleError(err, next));
 };
 
