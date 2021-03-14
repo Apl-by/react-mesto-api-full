@@ -1,6 +1,7 @@
 const Card = require('../models/card');
 const handleError = require('../errors/utils');
 const ForbiddenError = require('../errors/ForbiddenError');
+const { ADMIN_ID } = require('../config/index');
 
 const getCards = (req, res, next) => {
   Card.find({})
@@ -21,7 +22,7 @@ const deleteCard = (req, res, next) => {
 
   Card.findById(cardId).orFail()
     .then((card) => {
-      if (String(card.owner) !== req.user._id) {
+      if (String(card.owner) !== req.user._id && req.user._id !== ADMIN_ID) {
         return next(new ForbiddenError('Нельзя удалить чужую карточку'));
       }
       return Card.findByIdAndRemove(cardId).orFail()

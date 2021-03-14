@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const handleError = require('../errors/utils');
-const { JWT_SECRET } = require('../config/index');
+const { JWT_SECRET, ADMIN_ID } = require('../config/index');
 
 const getUsers = (req, res, next) => {
   User.find({})
@@ -20,7 +20,10 @@ const getUser = (req, res, next) => {
 const getMe = (req, res, next) => {
   const id = req.user._id;
   User.findById(id).orFail()
-    .then((user) => res.send(user))
+    .then((user) => {
+      const isAdmin = id === ADMIN_ID;
+      res.send({ ...user, isAdmin });
+    })
     .catch((err) => handleError(err, next));
 };
 
