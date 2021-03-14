@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const { CelebrateError } = require('celebrate');
 const cors = require('cors');
@@ -24,8 +23,8 @@ const allowedCors = [
   'https://www.apl-by.students.nomoreparties.space',
   'http://apl-by.students.nomoreparties.space',
   'http://www.apl-by.students.nomoreparties.space',
-  'http://localhost:3001',
-  'http://localhost:3000',
+  // 'http://localhost:3001',
+  // 'http://localhost:3000',
 ];
 
 const corsOptions = {
@@ -53,17 +52,18 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(requestLogger);
 app.use(limiter);
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(helmet());
 
-app.use(requestLogger);
+// ---Краш-тест сервера---
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
+// app.get('/crash-test', () => {
+//   setTimeout(() => {
+//     throw new Error('Сервер сейчас упадёт');
+//   }, 0);
+// });
 
 app.post('/signin', loginValidator, login);
 app.post('/signup', registerValidator, createUser);

@@ -40,6 +40,7 @@ const updateUser = (req, res, next) => {
     { name, about },
     { new: true, runValidators: true },
   )
+    .orFail()
     .then((user) => res.send(user))
     .catch((err) => handleError(err, next));
 };
@@ -48,6 +49,7 @@ const updateUserAvatar = (req, res, next) => {
   const ownerId = req.user._id;
   const { avatar } = req.body;
   User.findByIdAndUpdate(ownerId, { avatar }, { new: true, runValidators: true })
+    .orFail()
     .then((user) => res.send(user))
     .catch((err) => handleError(err, next));
 };
