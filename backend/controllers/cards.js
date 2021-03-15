@@ -2,10 +2,19 @@ const Card = require('../models/card');
 const handleError = require('../errors/utils');
 const ForbiddenError = require('../errors/ForbiddenError');
 const { ADMIN_ID } = require('../config/index');
+const defaultCards = require('../data/defaultCards');
 
 const getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.send(cards.reverse()))
+    .then((cards) => {
+      if (cards.length <= 10) {
+        return Card.insertMany(defaultCards)
+          .then((cardsDef) => {
+            res.send([...cardsDef.reverse(), ...cards].slice(0, 20));
+          });
+      }
+      return res.send(cards.reverse().slice(0, 20));
+    })
     .catch((err) => handleError(err, next));
 };
 

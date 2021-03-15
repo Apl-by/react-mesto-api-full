@@ -93,6 +93,17 @@ class Api {
       .then(this._handleResToJson)
       .then(this._handleResponse);
   }
+
+  getUsers(token) {
+    return fetch(`${this._baseUrl}/users`, {
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(this._handleResToJson)
+      .then(this._handleResponse);
+  }
 }
 
 export const api = new Api(config);

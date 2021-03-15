@@ -75,6 +75,17 @@ function App() {
       .catch((err) => console.log(err));
   }, [isLoggedIn, jwt]);
 
+  useEffect(() => {
+    if (!currentUser.isAdmin) return;
+
+    api
+      .getUsers(jwt)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }, [currentUser, jwt]);
+
   const handleAddPlaceSubmit = (card, e) => {
     api
       .addNewCard(card, jwt)

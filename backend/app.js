@@ -10,6 +10,7 @@ const { login, createUser } = require('./controllers/users');
 const loginValidator = require('./middlewares/validators/loginValidator');
 const registerValidator = require('./middlewares/validators/registerValidator');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { allowedCors } = require('./config/index');
 
 const { PORT = 3000 } = process.env;
 
@@ -17,15 +18,6 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 300,
 });
-
-const allowedCors = [
-  'https://apl-by.students.nomoreparties.space',
-  'https://www.apl-by.students.nomoreparties.space',
-  'http://apl-by.students.nomoreparties.space',
-  'http://www.apl-by.students.nomoreparties.space',
-  // 'http://localhost:3001',
-  'http://localhost:3000',
-];
 
 const corsOptions = {
   origin: allowedCors,
