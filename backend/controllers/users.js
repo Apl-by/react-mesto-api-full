@@ -22,7 +22,7 @@ const getMe = (req, res, next) => {
   User.findById(id).orFail()
     .then((user) => {
       const isAdmin = id === ADMIN_ID;
-      res.send({ ...user, isAdmin });
+      res.send({ ...user._doc, isAdmin });
     })
     .catch((err) => handleError(err, next));
 };

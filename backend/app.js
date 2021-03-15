@@ -24,7 +24,7 @@ const allowedCors = [
   'http://apl-by.students.nomoreparties.space',
   'http://www.apl-by.students.nomoreparties.space',
   // 'http://localhost:3001',
-  // 'http://localhost:3000',
+  'http://localhost:3000',
 ];
 
 const corsOptions = {
