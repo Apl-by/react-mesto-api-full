@@ -2,16 +2,12 @@ const { JWT_SECRET = 'dev-secret', ADMIN_ID, NODE_ENV } = process.env;
 
 const allowedCors = NODE_ENV === 'production'
   ? [
-    'https://apl-by.students.nomoreparties.space',
-    'https://www.apl-by.students.nomoreparties.space',
-    'http://apl-by.students.nomoreparties.space',
-    'http://www.apl-by.students.nomoreparties.space',
+    'https://mesto.apl-by.site',
+    'http://mesto.apl-by.site',
   ]
   : [
-    'https://apl-by.students.nomoreparties.space',
-    'https://www.apl-by.students.nomoreparties.space',
-    'http://apl-by.students.nomoreparties.space',
-    'http://www.apl-by.students.nomoreparties.space',
+    'https://mesto.apl-by.site',
+    'http://mesto.apl-by.site',
     'http://localhost:3001',
     'http://localhost:3000',
   ];
