@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Apl-by/express-mesto.git"
+    "url": "git+https://github.com/apl-by/express-mesto.git"
   },
   "author": "Aliaksandr Lahunou",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Apl-by/express-mesto/issues"
+    "url": "https://github.com/apl-by/express-mesto/issues"
   },
   "devDependencies": {
     "eslint": "^7.2.0",
