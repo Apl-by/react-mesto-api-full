@@ -9,7 +9,7 @@ const router = require('./routes');
 const { login, createUser } = require('./controllers/users');
 const loginValidator = require('./middlewares/validators/loginValidator');
 const registerValidator = require('./middlewares/validators/registerValidator');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
+// const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { allowedCors } = require('./config/index');
 
 const { PORT = 3000 } = process.env;
@@ -44,7 +44,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(requestLogger);
+// app.use(requestLogger);
 app.use(limiter);
 app.use(express.json());
 app.use(helmet());
@@ -61,7 +61,7 @@ app.post('/signin', loginValidator, login);
 app.post('/signup', registerValidator, createUser);
 app.use('/', router);
 
-app.use(errorLogger);
+// app.use(errorLogger);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
@@ -73,5 +73,4 @@ app.use((err, req, res, next) => {
   }
   return res.status(err.statusCode).send({ message: err.message });
 });
-
 app.listen(PORT);
